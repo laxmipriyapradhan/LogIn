@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import View from './View';
-import Icon, {icon} from 'react-icons-kit'
-import { useParams } from "react-router-dom";
-import {ic_check_circle} from 'react-icons-kit/md/ic_check_circle'
-import {ic_check_circle_outline} from 'react-icons-kit/md/ic_check_circle_outline'
 
 
 
@@ -28,21 +24,11 @@ export default function BookList() {
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [bookNo, setBookNo] = useState('');
-    const [editbook,setEditbook]=useState([]);
-   
 
 
 
     
     function handleAddBookSubmit(e) {
-
-        // if(!bookNo && !author && !title){
-        //     setCompleteicon(false)
-        // }
-        // else{
-        //     setCompleteicon(true)
-        // }
-
         e.preventDefault();
         let book = {
             title: title,
@@ -55,8 +41,10 @@ export default function BookList() {
         setBookNo('');
     }
 
-    
-    
+
+    function editBook(){
+        const bookdata=localStorage.getItem
+    }
 
 
     const deleteBook = (bookNo) => {
@@ -67,41 +55,37 @@ export default function BookList() {
         setBooks('')
     }
 
-    
+    // const completeBook=()=>{
+    //     if(title && author && bookNo){
+    //         <Icon  icon={ic_check_circle}/>
+    //     }
+    //     else{
+
+    //     }
+    // }
+
 
     useEffect(() => {
-        //localStorage.getItem('books', JSON.stringify(books));
-        const item = JSON.parse(localStorage.getItem('editbook'));
-        console.log('item',item);
-        setEditbook(item);
-        
-        
-    }, [title, author])
-
+        localStorage.setItem('books', JSON.stringify(books));
+    }, [books])
     return (
         <div className='wrapper'>
-
-            {console.log("editbook",editbook)}
-
             <h1>List App</h1>
             <p>Add and view your books using local storage</p>
             <div className='main'>
 
                 <div className='form-container'>
                     <form autoComplete='off' className='form_group' onSubmit={handleAddBookSubmit}>
-                    
-                    
-
                         <label>Title</label><br></br>
-                        <input type="text" className='form_control' 
+                        <input type="text" className='form_control' required
                             onChange={(e) => setTitle(e.target.value)} value={title}/><br />
 
                         <label>Author</label><br></br>
-                        <input type="text" className='form_control' 
+                        <input type="text" className='form_control' required
                             onChange={(e) => setAuthor(e.target.value)}value={author} /><br />
 
                         <label>Book-No</label><br></br>
-                        <input type="Number" className='form_control' 
+                        <input type="Number" className='form_control' required
                             onChange={(e) => setBookNo(e.target.value)} value={bookNo} /><br/>
                          
                         <button type='submit' className='btn btn-success btn-md'>Add</button>
@@ -131,7 +115,6 @@ export default function BookList() {
                             </div>
 
                             <button className='btn btn-danger btn-md' onClick={()=>{setBooks([])}}>Remove All</button>
-
 
                         </>}
                     {books.length < 1 && <div>no books are added yet</div>}
